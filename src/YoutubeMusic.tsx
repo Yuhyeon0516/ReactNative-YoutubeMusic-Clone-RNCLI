@@ -5,7 +5,7 @@ import HeaderCategory from './components/Header/CategoryHeader';
 import HeaderBackground from './components/Header/HeaderBackground';
 import Footer from './components/Footer/Footer';
 import MusicListSmall from './components/MusicList/MusicListSmall/MusicListSmall';
-import MusicListMedium from './components/MusicList/MusicListMedium';
+import MusicListMedium from './components/MusicList/MusicListMedium/MusicListMedium';
 import MusicListLarge from './components/MusicList/MusicListLarge';
 
 export default function YoutubeMusic() {
