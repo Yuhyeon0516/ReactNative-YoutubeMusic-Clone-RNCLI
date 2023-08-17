@@ -6,9 +6,10 @@
  */
 
 import React from 'react';
+import YoutubeMusic from './src/YoutubeMusic';
 
 function App(): JSX.Element {
-  return <></>;
+  return <YoutubeMusic />;
 }
 
 export default App;
