@@ -1,20 +1,30 @@
-import {View, Image} from 'react-native';
+import {Image, Animated} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
 type HeaderBackgroundPropsType = {
   selectedCategory: number | undefined;
+  headerBackgroundAnim: Animated.Value;
 };
 
 export default function HeaderBackground({
   selectedCategory,
+  headerBackgroundAnim,
 }: HeaderBackgroundPropsType) {
   return (
-    <View
+    <Animated.View
       style={{
         position: 'absolute',
         height: 350,
         width: '100%',
+        top: headerBackgroundAnim.interpolate({
+          inputRange: [-1, 0, 100],
+          outputRange: [0, 0, -100],
+        }),
+        opacity: headerBackgroundAnim.interpolate({
+          inputRange: [0, 100],
+          outputRange: [1, 0],
+        }),
       }}>
       {selectedCategory === undefined ? (
         <LinearGradient
@@ -22,7 +32,7 @@ export default function HeaderBackground({
           end={{x: 0.5, y: 1.0}}
           locations={[0, 0.3, 0.6, 1]}
           colors={['#ffa10050', '#28bf4b30', '#22222290', '#111111']}
-          style={{height: 350, opacity: 0.4}}
+          style={{height: 350}}
         />
       ) : (
         <>
@@ -39,6 +49,6 @@ export default function HeaderBackground({
           />
         </>
       )}
-    </View>
+    </Animated.View>
   );
 }
