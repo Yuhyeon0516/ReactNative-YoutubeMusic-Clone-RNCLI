@@ -12,8 +12,10 @@ export default function PlayListMini() {
         flex: 1,
         alignItems: 'center',
       }}>
-      <View style={{marginLeft: 14}}>
-        <Text style={{color: 'white'}}>{faker.music.songName()}</Text>
+      <View style={{marginLeft: 14, width: '60%'}}>
+        <Text style={{color: 'white'}} numberOfLines={1}>
+          {faker.music.songName()}
+        </Text>
         <Text style={{color: '#999'}}>{faker.music.genre()}</Text>
       </View>
       <View style={{flexDirection: 'row'}}>
