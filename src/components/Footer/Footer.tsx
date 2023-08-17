@@ -15,8 +15,8 @@ export default function Footer({playListAnim}: {playListAnim: Animated.Value}) {
           inputRange: [0, height / 2, height],
           outputRange: [
             0,
-            -BOTTOM_HEIGHT - safeAreaInset.bottom - 15,
-            -BOTTOM_HEIGHT - safeAreaInset.bottom - 15,
+            -BOTTOM_HEIGHT - safeAreaInset.bottom,
+            -BOTTOM_HEIGHT - safeAreaInset.bottom,
           ],
         }),
       }}>
@@ -24,7 +24,6 @@ export default function Footer({playListAnim}: {playListAnim: Animated.Value}) {
         style={{
           backgroundColor: '#222',
           paddingBottom: safeAreaInset.bottom,
-          paddingTop: 10,
         }}>
         <View style={{height: BOTTOM_HEIGHT}}>
           <View style={{flexDirection: 'row'}}>
