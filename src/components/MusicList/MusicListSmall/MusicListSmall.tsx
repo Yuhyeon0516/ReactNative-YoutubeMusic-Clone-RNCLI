@@ -3,7 +3,7 @@ import React from 'react';
 import MusicListSmallItem from './MusicListSmallItem';
 import MusicListSmallTitle from './MusicListSmallTitle';
 
-export default function MusicListSmall() {
+function MusicListSmall() {
   const {width} = useWindowDimensions();
 
   return (
@@ -14,7 +14,7 @@ export default function MusicListSmall() {
           return (
             <View key={index} style={{width: width * 0.93}}>
               {[...Array(4)].map((item, index) => {
-                return <MusicListSmallItem key={index} index={index} />;
+                return <MusicListSmallItem key={index} />;
               })}
             </View>
           );
@@ -23,3 +23,5 @@ export default function MusicListSmall() {
     </View>
   );
 }
+
+export default React.memo(MusicListSmall);

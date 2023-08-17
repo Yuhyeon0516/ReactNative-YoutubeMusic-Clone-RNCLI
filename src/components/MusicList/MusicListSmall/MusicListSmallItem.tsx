@@ -3,7 +3,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Entypo';
 import {faker} from '@faker-js/faker';
 
-export default function MusicListSmallItem({index}: {index: number}) {
+export default function MusicListSmallItem() {
   return (
     <View
       style={{
@@ -15,7 +15,9 @@ export default function MusicListSmallItem({index}: {index: number}) {
       }}>
       <View style={{flexDirection: 'row', flex: 1, flexShrink: 0}}>
         <Image
-          source={{uri: `https://picsum.photos/5${index}`}}
+          source={{
+            uri: `https://picsum.photos/${Math.floor(Math.random() * 100)}`,
+          }}
           style={{width: 50, height: 50, borderRadius: 2}}
         />
         <View style={{marginLeft: 14, justifyContent: 'center', flex: 1}}>
