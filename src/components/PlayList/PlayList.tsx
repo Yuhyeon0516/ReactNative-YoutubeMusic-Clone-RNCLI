@@ -1,13 +1,26 @@
-import {Image, Animated, PanResponder, useWindowDimensions} from 'react-native';
+import {
+  Image,
+  Animated,
+  PanResponder,
+  useWindowDimensions,
+  View,
+  Text,
+} from 'react-native';
 import React, {useRef} from 'react';
 import PlayListMini from './PlayListMini';
-import ImageComponent from './ImageComponent';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import PlayListFullTop from './PlayListFull/PlayListFullTop';
+import {
+  PLAY_LIST_FOOTTER_BOTTOM,
+  PLAY_LIST_MARGIN_TOP,
+} from '../../utils/utils';
 
 export default function PlayList({
   playListAnim,
 }: {
   playListAnim: Animated.Value;
 }) {
+  const safeAreaInset = useSafeAreaInsets();
   const playListRef = useRef('mini');
   const {width, height} = useWindowDimensions();
   const panRes = PanResponder.create({
@@ -26,30 +39,34 @@ export default function PlayList({
       const {dy} = gestureState;
 
       if (dy < -100 && playListRef.current === 'mini') {
-        Animated.spring(playListAnim, {
-          toValue: height + 10,
+        Animated.timing(playListAnim, {
+          toValue: height,
+          duration: 200,
           useNativeDriver: false,
         }).start();
         playListRef.current = 'full';
       }
       if (dy < 0 && dy > -100 && playListRef.current === 'mini') {
-        Animated.spring(playListAnim, {
+        Animated.timing(playListAnim, {
           toValue: 0,
+          duration: 200,
           useNativeDriver: false,
         }).start();
       }
 
       if (dy > 100 && playListRef.current === 'full') {
-        Animated.spring(playListAnim, {
+        Animated.timing(playListAnim, {
           toValue: 0,
+          duration: 200,
           useNativeDriver: false,
         }).start();
         playListRef.current = 'mini';
       }
 
       if (dy > 0 && dy < 100 && playListRef.current === 'full') {
-        Animated.spring(playListAnim, {
-          toValue: height + 10,
+        Animated.timing(playListAnim, {
+          toValue: height,
+          duration: 200,
           useNativeDriver: false,
         }).start();
       }
@@ -65,7 +82,7 @@ export default function PlayList({
         borderBottomWidth: 1,
         marginTop: playListAnim.interpolate({
           inputRange: [0, height / 2, height],
-          outputRange: [0, -200, -200],
+          outputRange: [0, PLAY_LIST_MARGIN_TOP, PLAY_LIST_MARGIN_TOP],
         }),
         height: playListAnim.interpolate({
           inputRange: [0, 100],
@@ -78,23 +95,39 @@ export default function PlayList({
           outputRange: [10, width * 0.1, width * 0.1],
         }),
       }}>
-      <Animated.View
-        style={{
-          width: playListAnim.interpolate({
-            inputRange: [0, height / 2, height],
-            outputRange: [50, width * 0.8, width * 0.8],
-          }),
-          height: playListAnim.interpolate({
-            inputRange: [0, height / 2, height],
-            outputRange: [50, width * 0.8, width * 0.8],
-          }),
-        }}>
-        <Image
-          source={{uri: 'https://picsum.photos/id/240/300'}}
-          style={{width: '100%', height: '100%'}}
-        />
-      </Animated.View>
-      {/* <PlayListFull /> */}
+      <View>
+        <PlayListFullTop playListAnim={playListAnim} />
+        <Animated.View
+          style={{
+            width: playListAnim.interpolate({
+              inputRange: [0, height / 2, height],
+              outputRange: [50, width * 0.8, width * 0.8],
+            }),
+            height: playListAnim.interpolate({
+              inputRange: [0, height / 2, height],
+              outputRange: [50, width * 0.8, width * 0.8],
+            }),
+          }}>
+          <Image
+            source={{uri: 'https://picsum.photos/id/240/300'}}
+            style={{width: '100%', height: '100%'}}
+          />
+        </Animated.View>
+        <Animated.View
+          style={{
+            height: playListAnim.interpolate({
+              inputRange: [0, height / 2, height],
+              outputRange: [0, 0, 250],
+            }),
+            opacity: playListAnim.interpolate({
+              inputRange: [height / 2, height],
+              outputRange: [0, 1],
+            }),
+          }}>
+          <Text style={{borderWidth: 1}}>Middle</Text>
+        </Animated.View>
+      </View>
+
       <Animated.View
         style={{
           flex: 1,
@@ -104,6 +137,23 @@ export default function PlayList({
           }),
         }}>
         <PlayListMini />
+      </Animated.View>
+      <Animated.View
+        style={{
+          position: 'absolute',
+          width: width,
+          height: playListAnim.interpolate({
+            inputRange: [height / 2, height],
+            outputRange: [0, 100],
+          }),
+          opacity: playListAnim.interpolate({
+            inputRange: [height / 2, height],
+            outputRange: [0, 1],
+          }),
+          bottom: PLAY_LIST_FOOTTER_BOTTOM,
+          borderWidth: 1,
+        }}>
+        <Text>Bottom</Text>
       </Animated.View>
     </Animated.View>
   );
