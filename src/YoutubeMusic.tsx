@@ -6,7 +6,7 @@ import HeaderBackground from './components/Header/HeaderBackground';
 import Footer from './components/Footer/Footer';
 import MusicListSmall from './components/MusicList/MusicListSmall/MusicListSmall';
 import MusicListMedium from './components/MusicList/MusicListMedium/MusicListMedium';
-import MusicListLarge from './components/MusicList/MusicListLarge';
+import MusicListLarge from './components/MusicList/MusicListLarge/MusicListLarge';
 
 export default function YoutubeMusic() {
   const [selectedCategory, setSelectedCategory] = useState<
@@ -22,7 +22,7 @@ export default function YoutubeMusic() {
         setSelectedCategory={setSelectedCategory}
       />
       <ScrollView>
-        <View style={{height: 10000}}>
+        <View style={{marginBottom: 100}}>
           <MusicListSmall />
           <MusicListMedium />
           <MusicListLarge />
