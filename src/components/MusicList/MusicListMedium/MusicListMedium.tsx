@@ -7,7 +7,10 @@ function MusicListMedium() {
   return (
     <View>
       <MusicListMediumTitle />
-      <ScrollView horizontal contentContainerStyle={{paddingHorizontal: 10}}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{paddingHorizontal: 10}}>
         {[...Array(7)].map((item, index) => {
           return (
             <View key={index} style={{marginRight: 20}}>

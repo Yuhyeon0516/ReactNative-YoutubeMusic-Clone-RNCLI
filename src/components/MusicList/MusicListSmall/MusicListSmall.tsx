@@ -9,7 +9,10 @@ function MusicListSmall() {
   return (
     <View>
       <MusicListSmallTitle />
-      <ScrollView horizontal contentContainerStyle={{paddingHorizontal: 10}}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{paddingHorizontal: 10}}>
         {[...Array(3)].map((item, index) => {
           return (
             <View key={index} style={{width: width * 0.93}}>
