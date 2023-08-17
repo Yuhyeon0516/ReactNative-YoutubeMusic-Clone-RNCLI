@@ -8,19 +8,15 @@ import {
 } from 'react-native';
 import React, {useRef} from 'react';
 import PlayListMini from './PlayListMini';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import PlayListFullTop from './PlayListFull/PlayListFullTop';
-import {
-  PLAY_LIST_FOOTTER_BOTTOM,
-  PLAY_LIST_MARGIN_TOP,
-} from '../../utils/utils';
+import {PLAY_LIST_MARGIN_TOP} from '../../utils/utils';
+import PlayListFullBottom from './PlayListFull/PlayListFullBottom';
 
 export default function PlayList({
   playListAnim,
 }: {
   playListAnim: Animated.Value;
 }) {
-  const safeAreaInset = useSafeAreaInsets();
   const playListRef = useRef('mini');
   const {width, height} = useWindowDimensions();
   const panRes = PanResponder.create({
@@ -138,23 +134,7 @@ export default function PlayList({
         }}>
         <PlayListMini />
       </Animated.View>
-      <Animated.View
-        style={{
-          position: 'absolute',
-          width: width,
-          height: playListAnim.interpolate({
-            inputRange: [height / 2, height],
-            outputRange: [0, 100],
-          }),
-          opacity: playListAnim.interpolate({
-            inputRange: [height / 2, height],
-            outputRange: [0, 1],
-          }),
-          bottom: PLAY_LIST_FOOTTER_BOTTOM,
-          borderWidth: 1,
-        }}>
-        <Text>Bottom</Text>
-      </Animated.View>
+      <PlayListFullBottom playListAnim={playListAnim} />
     </Animated.View>
   );
 }
