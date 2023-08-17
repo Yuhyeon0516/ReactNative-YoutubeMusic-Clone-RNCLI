@@ -9,7 +9,11 @@ export default function Footer() {
 
   return (
     <View
-      style={{backgroundColor: '#222', paddingBottom: safeAreaInset.bottom}}>
+      style={{
+        backgroundColor: '#222',
+        paddingBottom: safeAreaInset.bottom,
+        paddingTop: 10,
+      }}>
       <View style={{height: BOTTOM_HEIGHT}}>
         <View style={{flexDirection: 'row'}}>
           <FooterItem iconName="home-filled" title="홈" />

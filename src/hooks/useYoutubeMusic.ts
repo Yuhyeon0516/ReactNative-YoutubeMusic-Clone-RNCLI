@@ -20,8 +20,8 @@ export default function useYoutubeMusic() {
       headerAnim.setValue(dy);
     }
 
-    if (dy < 0 && !showHeaderRef.current) {
-      headerAnim.setValue(40 + dy);
+    if (dy < 0 && dy > -40 && !showHeaderRef.current) {
+      headerAnim.setValue(100 + dy);
     }
 
     headerBackgroundAnim.setValue(y);
@@ -33,7 +33,7 @@ export default function useYoutubeMusic() {
 
     if (dy > 0 && showHeaderRef.current) {
       Animated.spring(headerAnim, {
-        toValue: 60,
+        toValue: 100,
         useNativeDriver: false,
       }).start();
       showHeaderRef.current = false;
