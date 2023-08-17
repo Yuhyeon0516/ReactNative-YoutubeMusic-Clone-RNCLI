@@ -7,9 +7,14 @@
 
 import React from 'react';
 import YoutubeMusic from './src/YoutubeMusic';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 function App(): JSX.Element {
-  return <YoutubeMusic />;
+  return (
+    <SafeAreaProvider>
+      <YoutubeMusic />
+    </SafeAreaProvider>
+  );
 }
 
 export default App;

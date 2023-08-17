@@ -3,7 +3,7 @@ import React from 'react';
 import HeaderLogo from './components/HeaderLogo';
 import HeaderCategory from './components/HeaderCategory';
 import HeaderBackground from './components/HeaderBackground';
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
 
 export default function YoutubeMusic() {
   return (
