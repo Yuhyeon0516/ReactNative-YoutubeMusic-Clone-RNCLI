@@ -8,7 +8,7 @@ export default function LogoHeader({headerAnim}: {headerAnim: Animated.Value}) {
       <Animated.View
         style={{
           marginTop: headerAnim.interpolate({
-            inputRange: [-40, 0, 40],
+            inputRange: [-40, 0, 100],
             outputRange: [0, 0, -60],
           }),
           opacity: headerAnim.interpolate({
