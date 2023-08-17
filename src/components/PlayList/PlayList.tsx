@@ -4,13 +4,13 @@ import {
   PanResponder,
   useWindowDimensions,
   View,
-  Text,
 } from 'react-native';
 import React, {useRef} from 'react';
 import PlayListMini from './PlayListMini';
 import PlayListFullTop from './PlayListFull/PlayListFullTop';
-import {PLAY_LIST_MARGIN_TOP} from '../../utils/utils';
+import {PLAY_LIST_IMAGE_SIZE, PLAY_LIST_MARGIN_TOP} from '../../utils/utils';
 import PlayListFullBottom from './PlayListFull/PlayListFullBottom';
+import PlayListFullMiddle from './PlayListFull/PlayListFullMiddle';
 
 export default function PlayList({
   playListAnim,
@@ -103,25 +103,15 @@ export default function PlayList({
               inputRange: [0, height / 2, height],
               outputRange: [50, width * 0.8, width * 0.8],
             }),
+            justifyContent: 'center',
+            alignItems: 'center',
           }}>
           <Image
             source={{uri: 'https://picsum.photos/id/240/300'}}
-            style={{width: '100%', height: '100%'}}
+            style={{width: PLAY_LIST_IMAGE_SIZE, height: PLAY_LIST_IMAGE_SIZE}}
           />
         </Animated.View>
-        <Animated.View
-          style={{
-            height: playListAnim.interpolate({
-              inputRange: [0, height / 2, height],
-              outputRange: [0, 0, 250],
-            }),
-            opacity: playListAnim.interpolate({
-              inputRange: [height / 2, height],
-              outputRange: [0, 1],
-            }),
-          }}>
-          <Text style={{borderWidth: 1}}>Middle</Text>
-        </Animated.View>
+        <PlayListFullMiddle playListAnim={playListAnim} />
       </View>
 
       <Animated.View
