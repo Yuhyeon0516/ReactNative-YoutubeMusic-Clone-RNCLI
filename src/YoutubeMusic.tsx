@@ -11,8 +11,8 @@ export default function YoutubeMusic() {
   >();
 
   return (
-    <View style={{flex: 1}}>
-      <HeaderBackground />
+    <View style={{flex: 1, backgroundColor: '#111'}}>
+      <HeaderBackground selectedCategory={selectedCategory} />
       <LogoHeader />
       <HeaderCategory
         selectedCategory={selectedCategory}
