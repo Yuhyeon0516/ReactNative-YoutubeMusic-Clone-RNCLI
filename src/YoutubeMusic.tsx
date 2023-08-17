@@ -14,12 +14,20 @@ export default function YoutubeMusic() {
     number | undefined
   >();
 
-  const {onScrollBeginDrag, onScroll, onScrollEndDrag, headerAnim} =
-    useYoutubeMusic();
+  const {
+    onScrollBeginDrag,
+    onScroll,
+    onScrollEndDrag,
+    headerAnim,
+    headerBackgroundAnim,
+  } = useYoutubeMusic();
 
   return (
     <View style={{flex: 1, backgroundColor: '#111'}}>
-      <HeaderBackground selectedCategory={selectedCategory} />
+      <HeaderBackground
+        selectedCategory={selectedCategory}
+        headerBackgroundAnim={headerBackgroundAnim}
+      />
       <LogoHeader headerAnim={headerAnim} />
       <HeaderCategory
         selectedCategory={selectedCategory}

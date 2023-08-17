@@ -3,6 +3,7 @@ import {Animated, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 
 export default function useYoutubeMusic() {
   const headerAnim = useRef(new Animated.Value(0)).current;
+  const headerBackgroundAnim = useRef(new Animated.Value(0)).current;
   const showHeaderRef = useRef(true);
   const scrollStartRef = useRef<number>(0);
 
@@ -22,6 +23,8 @@ export default function useYoutubeMusic() {
     if (dy < 0 && !showHeaderRef.current) {
       headerAnim.setValue(40 + dy);
     }
+
+    headerBackgroundAnim.setValue(y);
   }
 
   function onScrollEndDrag(e: NativeSyntheticEvent<NativeScrollEvent>) {
@@ -49,5 +52,6 @@ export default function useYoutubeMusic() {
     onScroll,
     onScrollEndDrag,
     headerAnim,
+    headerBackgroundAnim,
   };
 }
