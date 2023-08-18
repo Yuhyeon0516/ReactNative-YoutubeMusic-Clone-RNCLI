@@ -27,9 +27,9 @@ export default function Footer({playListAnim}: {playListAnim: Animated.Value}) {
         }}>
         <View style={{height: BOTTOM_HEIGHT}}>
           <View style={{flexDirection: 'row'}}>
-            <FooterItem iconName="home-filled" title="홈" />
-            <FooterItem iconName="explore" title="둘러보기" />
-            <FooterItem iconName="library-music" title="보관함" />
+            <FooterItem iconName="home-variant" title="홈" />
+            <FooterItem iconName="compass-outline" title="둘러보기" />
+            <FooterItem iconName="music-box-multiple-outline" title="보관함" />
           </View>
         </View>
       </View>
