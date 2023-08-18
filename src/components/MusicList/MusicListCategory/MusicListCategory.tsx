@@ -1,7 +1,7 @@
-import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
+import {View, ScrollView, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import MusicListCategoryTitle from './MusicListCategoryTitle';
-import {Categories, Items, getCategories} from '../../../hooks/useSpotify';
+import {Items, getCategories} from '../../../hooks/useSpotify';
 import MusicListCategoryItem from './MusicListCategoryItem';
 
 export default function MusicListCategory() {
