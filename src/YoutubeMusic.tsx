@@ -9,6 +9,7 @@ import MusicListMedium from './components/MusicList/MusicListMedium/MusicListMed
 import MusicListLarge from './components/MusicList/MusicListLarge/MusicListLarge';
 import useYoutubeMusic from './hooks/useYoutubeMusic';
 import PlayList from './components/PlayList/PlayList';
+import MusicListCategory from './components/MusicList/MusicListCategory/MusicListCategory';
 
 export default function YoutubeMusic() {
   const [selectedCategory, setSelectedCategory] = useState<
@@ -43,6 +44,7 @@ export default function YoutubeMusic() {
         onScroll={onScroll}
         onScrollEndDrag={onScrollEndDrag}>
         <View style={{marginBottom: 100}}>
+          <MusicListCategory />
           <MusicListSmall />
           <MusicListMedium />
           <MusicListLarge />

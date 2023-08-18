@@ -33,7 +33,7 @@ interface Icons {
   width: number;
 }
 
-interface Items {
+export interface Items {
   href: string;
   icons: Icons[];
   id: string;
@@ -47,7 +47,7 @@ interface Categories {
   };
 }
 
-async function getCatogery(): Promise<Items[]> {
+export async function getCategories(): Promise<Items[]> {
   const {access_token, token_type} = await getToken();
 
   const categories: Categories = await axios
@@ -60,5 +60,3 @@ async function getCatogery(): Promise<Items[]> {
 
   return categories.categories.items;
 }
-
-export {getCatogery};
