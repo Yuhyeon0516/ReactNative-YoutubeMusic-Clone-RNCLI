@@ -9,7 +9,8 @@ import MusicListMedium from './components/MusicList/MusicListMedium/MusicListMed
 import MusicListLarge from './components/MusicList/MusicListLarge/MusicListLarge';
 import useYoutubeMusic from './hooks/useYoutubeMusic';
 import PlayList from './components/PlayList/PlayList';
-import BestCategoryList from './components/MusicList/MusicListCategory/BestCategoryList';
+import BestCategoryList from './components/MusicList/BestCategory/BestCategoryList';
+import {useBestCategory} from './hooks/useBestCategory';
 
 export default function YoutubeMusic() {
   const [selectedCategory, setSelectedCategory] = useState<
@@ -25,6 +26,8 @@ export default function YoutubeMusic() {
   } = useYoutubeMusic();
 
   const playListAnim = useRef(new Animated.Value(0)).current;
+
+  const {setCategorySelected, categorySelected} = useBestCategory();
 
   return (
     <View style={{flex: 1, backgroundColor: '#111'}}>
