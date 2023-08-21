@@ -11,6 +11,7 @@ import useYoutubeMusic from './hooks/useYoutubeMusic';
 import PlayList from './components/PlayList/PlayList';
 import BestCategoryList from './components/MusicList/BestCategory/BestCategoryList';
 import {useBestCategory} from './hooks/useBestCategory';
+import CategoryPopup from './components/MusicList/BestCategory/CategoryPopup';
 
 export default function YoutubeMusic() {
   const [selectedCategory, setSelectedCategory] = useState<
@@ -55,6 +56,7 @@ export default function YoutubeMusic() {
       </ScrollView>
       <PlayList playListAnim={playListAnim} />
       <Footer playListAnim={playListAnim} />
+      {categorySelected && <CategoryPopup />}
     </View>
   );
 }
