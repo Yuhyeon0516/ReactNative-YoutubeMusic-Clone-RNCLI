@@ -1,16 +1,45 @@
-import {View, Text, Image, useWindowDimensions} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  Image,
+  useWindowDimensions,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
+import React, {useCallback} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface ItemProps {
   name: string;
   url: string;
+  categoryPopupAnim: Animated.Value;
+  setCategorySelected: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function BestCategoryItem({name, url}: ItemProps) {
+export default function BestCategoryItem({
+  name,
+  url,
+  categoryPopupAnim,
+  setCategorySelected,
+}: ItemProps) {
   const {width} = useWindowDimensions();
+
+  function onPressItem() {
+    setCategorySelected(true);
+    Animated.timing(categoryPopupAnim, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: false,
+    }).start();
+  }
+
+  const ucOnPressItem = useCallback(onPressItem, [
+    categoryPopupAnim,
+    setCategorySelected,
+  ]);
+
   return (
-    <View>
+    <TouchableOpacity onPress={ucOnPressItem}>
       <Image
         source={{
           uri: url,
@@ -49,6 +78,6 @@ export default function BestCategoryItem({name, url}: ItemProps) {
         numberOfLines={2}>
         {name}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 }

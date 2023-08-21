@@ -5,20 +5,35 @@ import {
   useWindowDimensions,
   Image,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {useBestCategory} from '../../../hooks/useBestCategory';
 
-export default function CategoryPopup() {
+export default function CategoryPopup({
+  categoryPopupAnim,
+  setCategorySelected,
+}: {
+  categoryPopupAnim: Animated.Value;
+  setCategorySelected: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const {width} = useWindowDimensions();
-  const {setCategorySelected} = useBestCategory();
 
-  function onPressClose() {}
+  function onPressClose() {
+    Animated.timing(categoryPopupAnim, {
+      toValue: 0,
+      duration: 600,
+      useNativeDriver: false,
+    }).start(({finished}) => {
+      if (finished) {
+        setCategorySelected(false);
+      }
+    });
+  }
 
   return (
-    <View
+    <Animated.View
       style={{
         flex: 1,
         width: '100%',
@@ -26,6 +41,15 @@ export default function CategoryPopup() {
         position: 'absolute',
         backgroundColor: '#1c1c1d',
         paddingHorizontal: 20,
+        top: 0,
+        transform: [
+          {
+            translateY: categoryPopupAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [1200, 0],
+            }),
+          },
+        ],
       }}>
       <SafeAreaView style={{flex: 1, alignItems: 'center'}}>
         <View
@@ -36,7 +60,7 @@ export default function CategoryPopup() {
             alignItems: 'flex-end',
             marginBottom: 10,
           }}>
-          <TouchableOpacity style={{padding: 10}}>
+          <TouchableOpacity style={{padding: 10}} onPress={onPressClose}>
             <Ionicons name="close" size={35} color={'whitesmoke'} />
           </TouchableOpacity>
         </View>
@@ -131,6 +155,6 @@ export default function CategoryPopup() {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    </View>
+    </Animated.View>
   );
 }
