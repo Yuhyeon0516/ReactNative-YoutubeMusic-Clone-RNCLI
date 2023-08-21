@@ -34,7 +34,7 @@ export default function PlaylistFullTop({
         }}>
         <View style={{flexDirection: 'row'}}>
           <IconItem name="chevron-down" />
-          <IconItem name={''} />
+          <View style={{height: 40, width: 40}} />
         </View>
         <View
           style={{

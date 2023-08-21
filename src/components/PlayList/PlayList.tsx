@@ -12,11 +12,7 @@ import {PLAY_LIST_IMAGE_SIZE, PLAY_LIST_MARGIN_TOP} from '../../utils/utils';
 import PlayListFullBottom from './PlayListFull/PlayListFullBottom';
 import PlayListFullMiddle from './PlayListFull/PlayListFullMiddle';
 
-export default function PlayList({
-  playListAnim,
-}: {
-  playListAnim: Animated.Value;
-}) {
+function PlayList({playListAnim}: {playListAnim: Animated.Value}) {
   const playListRef = useRef('mini');
   const {width, height} = useWindowDimensions();
   const panRes = PanResponder.create({
@@ -128,3 +124,5 @@ export default function PlayList({
     </Animated.View>
   );
 }
+
+export default React.memo(PlayList);
