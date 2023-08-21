@@ -7,7 +7,7 @@ interface ItemProps {
   url: string;
 }
 
-export default function MusicListCategoryItem({name, url}: ItemProps) {
+export default function BestCategoryItem({name, url}: ItemProps) {
   const {width} = useWindowDimensions();
   return (
     <View>

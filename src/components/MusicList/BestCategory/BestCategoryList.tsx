@@ -1,10 +1,10 @@
 import {View, ScrollView, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import MusicListCategoryTitle from './MusicListCategoryTitle';
+import BestCategoryTitle from './BestCategoryTitle';
 import {Items, getCategories} from '../../../hooks/useSpotify';
-import MusicListCategoryItem from './MusicListCategoryItem';
+import BestCategoryItem from './BestCategoryItem';
 
-export default function MusicListCategory() {
+export default function BestCategoryList() {
   const [categories, setcategories] = useState<Items[] | null>(null);
 
   async function fetchCategories() {
@@ -18,7 +18,7 @@ export default function MusicListCategory() {
 
   return (
     <View>
-      <MusicListCategoryTitle />
+      <BestCategoryTitle />
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -27,10 +27,7 @@ export default function MusicListCategory() {
           categories.map((item, index) => {
             return (
               <View key={index} style={{marginRight: 20}}>
-                <MusicListCategoryItem
-                  name={item.name}
-                  url={item.icons[0].url}
-                />
+                <BestCategoryItem name={item.name} url={item.icons[0].url} />
               </View>
             );
           })
