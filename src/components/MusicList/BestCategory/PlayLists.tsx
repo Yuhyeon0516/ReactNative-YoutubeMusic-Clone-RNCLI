@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -61,15 +62,16 @@ export default function PlayLists({
           </Text>
         </View>
       </SafeAreaView>
+
       <ScrollView>
         <PlayListsItem />
         <View
           style={{
             alignSelf: 'center',
-            width: '92%',
+            width: '90%',
             height: 1,
             borderWidth: 1,
-            borderColor: '#f2f2f240',
+            borderColor: '#f2f2f230',
             marginVertical: 5,
           }}
         />

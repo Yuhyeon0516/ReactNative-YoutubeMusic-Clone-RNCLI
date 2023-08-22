@@ -93,3 +93,33 @@ export async function getCategoryPlayLists(href: string): Promise<PlayLists> {
 
   return playLists;
 }
+
+export interface Track {
+  items: {
+    track: {
+      album: {
+        artists: {
+          name: string;
+        }[];
+        images: {
+          url: string;
+        }[];
+        name: string;
+      };
+    };
+  }[];
+}
+
+export async function getTrack(href: string): Promise<Track> {
+  const {access_token, token_type} = await getToken();
+
+  const track: Track = await axios
+    .get(href, {
+      headers: {
+        Authorization: `${token_type} ${access_token}`,
+      },
+    })
+    .then(result => result.data);
+
+  return track;
+}
