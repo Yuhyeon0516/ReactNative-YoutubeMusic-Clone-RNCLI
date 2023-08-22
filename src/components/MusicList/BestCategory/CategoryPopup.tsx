@@ -1,24 +1,31 @@
 import {
   View,
-  Text,
   SafeAreaView,
   useWindowDimensions,
-  Image,
   TouchableOpacity,
   Animated,
+  Pressable,
 } from 'react-native';
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import CategoryPopupItem from './CategoryPopupItem';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {PlayLists} from '../../../hooks/useSpotify';
 
 export default function CategoryPopup({
   categoryPopupAnim,
   setCategorySelected,
+  categoryPlayLists,
+  setCategoryPlayLists,
 }: {
   categoryPopupAnim: Animated.Value;
   setCategorySelected: React.Dispatch<React.SetStateAction<boolean>>;
+  categoryPlayLists: PlayLists | null;
+  setCategoryPlayLists: React.Dispatch<React.SetStateAction<PlayLists | null>>;
 }) {
   const {width} = useWindowDimensions();
+  const xAnim = useRef(new Animated.Value(0)).current;
+  const [currentPage, setCurrentPage] = useState(0);
 
   function onPressClose() {
     Animated.timing(categoryPopupAnim, {
@@ -28,33 +35,47 @@ export default function CategoryPopup({
     }).start(({finished}) => {
       if (finished) {
         setCategorySelected(false);
+        setCategoryPlayLists(null);
+        setCurrentPage(0);
+        xAnim.setValue(0);
       }
     });
+  }
+
+  function onPressLeft() {
+    Animated.timing(xAnim, {
+      toValue: (currentPage - 1) * -(width - 100),
+      duration: 400,
+      useNativeDriver: false,
+    }).start();
+
+    setCurrentPage(prev => prev - 1);
+  }
+
+  function onPressRight() {
+    Animated.timing(xAnim, {
+      toValue: (currentPage + 1) * -(width - 100),
+      duration: 400,
+      useNativeDriver: false,
+    }).start();
+
+    setCurrentPage(prev => prev + 1);
   }
 
   return (
     <Animated.View
       style={{
         flex: 1,
-        width: '100%',
         height: '100%',
+        width: '100%',
         position: 'absolute',
         backgroundColor: '#1c1c1d',
-        paddingHorizontal: 20,
         top: categoryPopupAnim.interpolate({
           inputRange: [0, 1],
           outputRange: [1000, 0],
         }),
-        // transform: [
-        //   {
-        //     translateY: categoryPopupAnim.interpolate({
-        //       inputRange: [0, 1],
-        //       outputRange: [500, 0],
-        //     }),
-        //   },
-        // ],
       }}>
-      <SafeAreaView style={{flex: 1, alignItems: 'center'}}>
+      <SafeAreaView>
         <View
           style={{
             width: width,
@@ -67,97 +88,160 @@ export default function CategoryPopup({
             <Ionicons name="close" size={35} color={'whitesmoke'} />
           </TouchableOpacity>
         </View>
+      </SafeAreaView>
 
-        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+      <View style={{alignItems: 'center', flex: 1}}>
+        {categoryPlayLists && (
           <View
             style={{
-              width: width * 0.7,
-              height: width * 0.7,
-              marginBottom: 20,
+              flex: 1,
+              // width: width * categoryPlayLists.playlists.items.length,
             }}>
-            <Image
-              source={{
-                uri: 'https://i.scdn.co/image/ab67706f0000000387237319bd466917030bc653',
-              }}
-              width={width * 0.7}
-              height={width * 0.7}
+            <View
               style={{
-                borderRadius: 10,
-              }}
-            />
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: width,
+                height: '100%',
+              }}>
+              {currentPage !== 0 ? (
+                <Pressable
+                  onPress={onPressLeft}
+                  style={{
+                    width: 50,
+                    height: '100%',
+                    backgroundColor: '#1c1c1d',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 10,
+                  }}>
+                  <MaterialIcons
+                    name="arrow-back-ios"
+                    size={25}
+                    color={'whitesmoke'}
+                  />
+                </Pressable>
+              ) : (
+                <View
+                  style={{
+                    width: 50,
+                    height: '100%',
+                    backgroundColor: '#1c1c1d',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 10,
+                  }}
+                />
+              )}
+
+              <Animated.View
+                style={{
+                  flexDirection: 'row',
+                  width:
+                    (width - 100) * categoryPlayLists.playlists.items.length,
+                  height: '100%',
+                  flexShrink: 4,
+                  transform: [
+                    {
+                      translateX: xAnim,
+                    },
+                  ],
+                }}>
+                {categoryPlayLists &&
+                  categoryPlayLists.playlists.items.map((item, index) => {
+                    return <CategoryPopupItem key={index} item={item} />;
+                  })}
+              </Animated.View>
+
+              {currentPage !== categoryPlayLists.playlists.items.length - 1 ? (
+                <Pressable
+                  onPress={onPressRight}
+                  style={{
+                    width: 50,
+                    height: '100%',
+                    backgroundColor: '#1c1c1d',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 10,
+                  }}>
+                  <MaterialIcons
+                    name="arrow-forward-ios"
+                    size={25}
+                    color={'whitesmoke'}
+                  />
+                </Pressable>
+              ) : (
+                <View
+                  style={{
+                    width: 50,
+                    height: '100%',
+                    backgroundColor: '#1c1c1d',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 10,
+                  }}
+                />
+              )}
+            </View>
+            {/* {categoryPlayLists.playlists.items.map((item, index) => {
+              return (
+                <View
+                  key={index}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: width,
+                    height: '100%',
+                  }}>
+                  {index ? (
+                    <TouchableOpacity
+                      onPress={() => onPressLeft(index)}
+                      style={{
+                        width: 50,
+                        height: 50,
+                        padding: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <MaterialIcons
+                        name="arrow-back-ios"
+                        size={25}
+                        color={'whitesmoke'}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <View style={{width: 50, height: 50, padding: 5}} />
+                  )}
+
+                  <CategoryPopupItem item={item} />
+
+                  {index !== categoryPlayLists.playlists.items.length - 1 ? (
+                    <TouchableOpacity
+                      onPress={() => onPressRight(index)}
+                      style={{
+                        width: 50,
+                        height: 50,
+                        padding: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <MaterialIcons
+                        name="arrow-forward-ios"
+                        size={25}
+                        color={'whitesmoke'}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <View style={{width: 50, height: 50, padding: 5}} />
+                  )}
+                </View>
+              );
+            })} */}
           </View>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 32,
-              color: 'whitesmoke',
-              marginBottom: 20,
-              textShadowColor: '#eee999',
-              textShadowOffset: {
-                height: -2,
-                width: 2,
-              },
-              textShadowRadius: 15,
-            }}>
-            Pop Rising Korea
-          </Text>
-          <Text style={{fontSize: 20, color: 'whitesmoke', marginBottom: 30}}>
-            지금 국내에서 떠오르고 있는 팝 음악을 만나보세요! (커버: Reneé Rapp)
-          </Text>
-          <View style={{flexDirection: 'row', gap: 30, marginBottom: 40}}>
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 60,
-                borderWidth: 1,
-                borderColor: 'pink',
-              }}>
-              <FontAwesome name="heart" color={'pink'} size={30} />
-            </View>
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 60,
-                borderWidth: 1,
-                borderColor: '#1988ec',
-              }}>
-              <FontAwesome name="thumbs-up" color={'#1988ec'} size={30} />
-            </View>
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 60,
-                borderWidth: 1,
-                borderColor: 'whitesmoke',
-              }}>
-              <FontAwesome name="share-alt" color={'whitesmoke'} size={30} />
-            </View>
-          </View>
-          <TouchableOpacity
-            style={{
-              borderColor: 'whitesmoke',
-              borderWidth: 0.5,
-              padding: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 30,
-            }}>
-            <Text
-              style={{fontSize: 14, color: 'whitesmoke', fontWeight: 'bold'}}>
-              모두 재생
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+        )}
+      </View>
     </Animated.View>
   );
 }

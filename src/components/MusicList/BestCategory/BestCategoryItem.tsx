@@ -1,5 +1,4 @@
 import {
-  View,
   Text,
   Image,
   useWindowDimensions,
@@ -7,25 +6,32 @@ import {
   Animated,
 } from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  Items,
+  PlayLists,
+  getCategoryPlayLists,
+} from '../../../hooks/useSpotify';
 
 interface ItemProps {
-  name: string;
-  url: string;
+  item: Items;
   categoryPopupAnim: Animated.Value;
   setCategorySelected: React.Dispatch<React.SetStateAction<boolean>>;
+  setCategoryPlayLists: React.Dispatch<React.SetStateAction<PlayLists | null>>;
 }
 
 export default function BestCategoryItem({
-  name,
-  url,
+  item,
   categoryPopupAnim,
   setCategorySelected,
+  setCategoryPlayLists,
 }: ItemProps) {
   const {width} = useWindowDimensions();
 
-  function onPressItem() {
+  async function onPressItem(href: string) {
     setCategorySelected(true);
+
+    const categoryPlayLists = await getCategoryPlayLists(href);
+    setCategoryPlayLists(categoryPlayLists);
 
     Animated.timing(categoryPopupAnim, {
       toValue: 1,
@@ -35,34 +41,13 @@ export default function BestCategoryItem({
   }
 
   return (
-    <TouchableOpacity onPress={onPressItem}>
+    <TouchableOpacity onPress={() => onPressItem(item.href)}>
       <Image
         source={{
-          uri: url,
+          uri: item.icons[0].url,
         }}
         style={{width: width / 2.5, height: width / 2.5, borderRadius: 4}}
       />
-      <View
-        style={{
-          width: width / 2.5,
-          height: width / 2.5,
-          position: 'absolute',
-        }}>
-        <View
-          style={{
-            backgroundColor: 'white',
-            width: width / 2.5 / 6.5 + 10,
-            height: width / 2.5 / 6.5 + 10,
-            position: 'absolute',
-            left: 7,
-            top: 7,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 100,
-          }}>
-          <Icon name="play" size={width / 2.5 / 6.5} color={'black'} />
-        </View>
-      </View>
       <Text
         style={{
           color: 'white',
@@ -72,7 +57,7 @@ export default function BestCategoryItem({
           height: 30,
         }}
         numberOfLines={2}>
-        {name}
+        {item.name}
       </Text>
     </TouchableOpacity>
   );
