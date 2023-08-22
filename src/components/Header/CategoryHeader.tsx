@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Text, TouchableOpacity, Animated} from 'react-native';
 import React, {Dispatch, SetStateAction} from 'react';
 

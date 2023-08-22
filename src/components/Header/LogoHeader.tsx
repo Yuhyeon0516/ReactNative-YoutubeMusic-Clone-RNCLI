@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Image, SafeAreaView, Animated} from 'react-native';
 import React from 'react';
 import LogoHeaderIcon from './LogoHeaderIcon';

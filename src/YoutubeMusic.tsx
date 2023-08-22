@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, ScrollView, Animated} from 'react-native';
 import React, {useRef, useState} from 'react';
 import LogoHeader from './components/Header/LogoHeader';

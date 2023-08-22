@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, ScrollView, ActivityIndicator, Animated} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import BestCategoryTitle from './BestCategoryTitle';
