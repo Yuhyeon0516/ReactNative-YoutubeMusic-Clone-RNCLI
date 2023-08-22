@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import PlayListsItem from './PlayListsItem';
 
 export default function PlayLists({
   playListsAnim,
@@ -61,8 +62,18 @@ export default function PlayLists({
         </View>
       </SafeAreaView>
       <ScrollView>
-        <View style={{backgroundColor: 'red', height: 600}} />
-        <View style={{backgroundColor: 'blue', height: 500}} />
+        <PlayListsItem />
+        <View
+          style={{
+            alignSelf: 'center',
+            width: '92%',
+            height: 1,
+            borderWidth: 1,
+            borderColor: '#f2f2f240',
+            marginVertical: 5,
+          }}
+        />
+        <PlayListsItem />
       </ScrollView>
     </Animated.View>
   );
