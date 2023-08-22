@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   Text,
@@ -6,16 +7,21 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   ScrollView,
-  FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PlayListsItem from './PlayListsItem';
+import {Track} from '../../../hooks/useSpotify';
 
 export default function PlayLists({
   playListsAnim,
+  trackData,
+  setTrackData,
 }: {
   playListsAnim: Animated.Value;
+  trackData: Track | null;
+  setTrackData: React.Dispatch<React.SetStateAction<Track | null>>;
 }) {
   const {width} = useWindowDimensions();
 
@@ -24,7 +30,11 @@ export default function PlayLists({
       toValue: 0,
       duration: 500,
       useNativeDriver: false,
-    }).start();
+    }).start(({finished}) => {
+      if (finished) {
+        setTrackData(null);
+      }
+    });
   }
 
   return (
@@ -63,20 +73,32 @@ export default function PlayLists({
         </View>
       </SafeAreaView>
 
-      <ScrollView>
-        <PlayListsItem />
-        <View
-          style={{
-            alignSelf: 'center',
-            width: '90%',
-            height: 1,
-            borderWidth: 1,
-            borderColor: '#f2f2f230',
-            marginVertical: 5,
-          }}
-        />
-        <PlayListsItem />
-      </ScrollView>
+      {trackData ? (
+        <ScrollView>
+          {trackData.items.map((item, index) => {
+            return (
+              <View key={index}>
+                <PlayListsItem item={item} index={index} />
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    width: '90%',
+                    height: 1,
+                    borderWidth: 1,
+                    borderColor: '#f2f2f230',
+                    marginVertical: 5,
+                  }}
+                />
+              </View>
+            );
+          })}
+          <View style={{width: '100%', height: 50}} />
+        </ScrollView>
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator color={'whitesmoke'} />
+        </View>
+      )}
     </Animated.View>
   );
 }

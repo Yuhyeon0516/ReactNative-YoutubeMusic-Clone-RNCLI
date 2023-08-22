@@ -9,25 +9,37 @@ import {
 } from 'react-native';
 import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {PlayListItems, getTrack} from '../../../hooks/useSpotify';
+import {PlayListItems, Track, getTrack} from '../../../hooks/useSpotify';
+
+interface CategoryPopupItemProps {
+  item: PlayListItems;
+  playListsAnim: Animated.Value;
+  setTrackData: React.Dispatch<React.SetStateAction<Track | null>>;
+}
 
 export default function CategoryPopupItem({
   item,
   playListsAnim,
-}: {
-  item: PlayListItems;
-  playListsAnim: Animated.Value;
-}) {
+  setTrackData,
+}: CategoryPopupItemProps) {
   const {width} = useWindowDimensions();
+
+  async function fetchTrackData(href: string) {
+    const track = await getTrack(href);
+
+    setTrackData(track);
+  }
 
   async function onPressCheckPlayList(href: string) {
     Animated.timing(playListsAnim, {
       toValue: 1,
       duration: 500,
       useNativeDriver: false,
-    }).start();
-
-    const track = await getTrack(href);
+    }).start(({finished}) => {
+      if (finished) {
+        fetchTrackData(href);
+      }
+    });
   }
 
   return (

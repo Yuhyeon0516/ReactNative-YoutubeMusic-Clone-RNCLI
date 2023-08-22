@@ -1,8 +1,16 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Text, Image} from 'react-native';
 import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {TrackItem} from '../../../hooks/useSpotify';
 
-export default function PlayListsItem() {
+export default function PlayListsItem({
+  item,
+  index,
+}: {
+  item: TrackItem;
+  index: number;
+}) {
   return (
     <View
       style={{
@@ -22,15 +30,22 @@ export default function PlayListsItem() {
               color: 'whitesmoke',
               fontWeight: 'bold',
               fontSize: 30,
-              width: 30,
+              width: 45,
+              textAlign: 'center',
               height: 30,
               marginHorizontal: 5,
+              textShadowColor: '#eee999',
+              textShadowRadius: 5,
+              textShadowOffset: {
+                width: 2,
+                height: -2,
+              },
             }}>
-            1
+            {index + 1}
           </Text>
           <Image
             source={{
-              uri: 'https://i.scdn.co/image/ab67616d00001e02bf5cce5a0e1ed03a626bdd74',
+              uri: item.track.album.images[2].url,
             }}
             style={{
               width: 70,
@@ -48,10 +63,10 @@ export default function PlayListsItem() {
                 width: '100%',
                 fontSize: 30,
               }}>
-              Seven (feat. Latto)
+              {item.track.album.name}
             </Text>
             <Text numberOfLines={1} style={{color: 'whitesmoke', fontSize: 16}}>
-              Jung Kook
+              {item.track.album.artists[0].name}
             </Text>
           </View>
         </View>
