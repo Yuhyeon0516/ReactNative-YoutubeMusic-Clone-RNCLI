@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Animated, View, useWindowDimensions} from 'react-native';
 import React from 'react';
 import {BOTTOM_HEIGHT} from '../../utils/utils';

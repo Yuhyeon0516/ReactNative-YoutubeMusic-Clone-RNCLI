@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Image, Animated} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';

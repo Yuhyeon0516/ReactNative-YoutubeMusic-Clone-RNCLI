@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {ScrollView, View, useWindowDimensions} from 'react-native';
 import React, {useRef} from 'react';
 import MusicListSmallItem from './MusicListSmallItem';
@@ -54,11 +55,11 @@ function MusicListSmall() {
             });
           }
         }}>
-        {[...Array(3)].map((item, index) => {
+        {[...Array(3)].map((_, index) => {
           return (
             <View key={index} style={{width: width * 0.93}}>
-              {[...Array(4)].map((item, index) => {
-                return <MusicListSmallItem key={index} />;
+              {[...Array(4)].map((__, index2) => {
+                return <MusicListSmallItem key={index2} />;
               })}
             </View>
           );
