@@ -60,3 +60,31 @@ export async function getCategories(): Promise<Items[]> {
 
   return categories.categories.items;
 }
+
+export interface PlayLists {
+  playlists: {
+    items: {
+      description: string;
+      images: {
+        height: number | null;
+        url: string;
+        width: number | null;
+      }[];
+      name: string;
+    }[];
+  };
+}
+
+export async function getCategoryPlayLists(href: string): Promise<PlayLists> {
+  const {access_token, token_type} = await getToken();
+
+  const playLists: PlayLists = await axios
+    .get(`${href}/playlists`, {
+      headers: {
+        Authorization: `${token_type} ${access_token}`,
+      },
+    })
+    .then(result => result.data);
+
+  return playLists;
+}
