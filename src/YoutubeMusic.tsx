@@ -9,10 +9,10 @@ import MusicListMedium from './components/MusicList/MusicListMedium/MusicListMed
 import MusicListLarge from './components/MusicList/MusicListLarge/MusicListLarge';
 import useYoutubeMusic from './hooks/useYoutubeMusic';
 import PlayList from './components/PlayList/PlayList';
-import BestCategoryList from './components/MusicList/BestCategory/BestCategoryList';
 import {useBestCategory} from './hooks/useBestCategory';
-import CategoryPopup from './components/MusicList/BestCategory/CategoryPopup';
 import useAnimation from './hooks/useAnimation';
+import BestCategoryList from './components/MusicList/BestCategory/BestCategoryList';
+import CategoryPopup from './components/MusicList/BestCategory/CategoryPopup';
 
 export default function YoutubeMusic() {
   const [selectedCategory, setSelectedCategory] = useState<
@@ -29,7 +29,7 @@ export default function YoutubeMusic() {
 
   const playListAnim = useRef(new Animated.Value(0)).current;
   const {categoryPopupAnim} = useAnimation();
-  const {setCategorySelected, categorySelected} = useBestCategory();
+  const {setCategorySelected} = useBestCategory();
 
   return (
     <View style={{flex: 1, backgroundColor: '#111'}}>
@@ -60,12 +60,11 @@ export default function YoutubeMusic() {
       </ScrollView>
       <PlayList playListAnim={playListAnim} />
       <Footer playListAnim={playListAnim} />
-      {categorySelected && (
-        <CategoryPopup
-          categoryPopupAnim={categoryPopupAnim}
-          setCategorySelected={setCategorySelected}
-        />
-      )}
+
+      <CategoryPopup
+        categoryPopupAnim={categoryPopupAnim}
+        setCategorySelected={setCategorySelected}
+      />
     </View>
   );
 }
