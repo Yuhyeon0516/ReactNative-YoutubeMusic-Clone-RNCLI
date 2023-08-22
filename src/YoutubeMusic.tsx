@@ -29,7 +29,8 @@ export default function YoutubeMusic() {
 
   const playListAnim = useRef(new Animated.Value(0)).current;
   const {categoryPopupAnim} = useAnimation();
-  const {setCategorySelected} = useBestCategory();
+  const {setCategorySelected, categoryPlayLists, setCategoryPlayLists} =
+    useBestCategory();
 
   return (
     <View style={{flex: 1, backgroundColor: '#111'}}>
@@ -52,6 +53,7 @@ export default function YoutubeMusic() {
           <BestCategoryList
             categoryPopupAnim={categoryPopupAnim}
             setCategorySelected={setCategorySelected}
+            setCategoryPlayLists={setCategoryPlayLists}
           />
           <MusicListSmall />
           <MusicListMedium />
@@ -64,6 +66,8 @@ export default function YoutubeMusic() {
       <CategoryPopup
         categoryPopupAnim={categoryPopupAnim}
         setCategorySelected={setCategorySelected}
+        categoryPlayLists={categoryPlayLists}
+        setCategoryPlayLists={setCategoryPlayLists}
       />
     </View>
   );

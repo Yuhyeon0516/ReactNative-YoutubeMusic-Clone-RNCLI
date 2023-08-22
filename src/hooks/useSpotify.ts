@@ -61,17 +61,19 @@ export async function getCategories(): Promise<Items[]> {
   return categories.categories.items;
 }
 
+export interface PlayListItems {
+  description: string;
+  images: {
+    height: number | null;
+    url: string;
+    width: number | null;
+  }[];
+  name: string;
+}
+
 export interface PlayLists {
   playlists: {
-    items: {
-      description: string;
-      images: {
-        height: number | null;
-        url: string;
-        width: number | null;
-      }[];
-      name: string;
-    }[];
+    items: PlayListItems[];
   };
 }
 
