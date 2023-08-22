@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {PlayListItems} from '../../../hooks/useSpotify';
+import {PlayListItems, getTrack} from '../../../hooks/useSpotify';
 
 export default function CategoryPopupItem({
   item,
@@ -20,12 +20,14 @@ export default function CategoryPopupItem({
 }) {
   const {width} = useWindowDimensions();
 
-  function onPressCheckPlayList() {
+  async function onPressCheckPlayList(href: string) {
     Animated.timing(playListsAnim, {
       toValue: 1,
       duration: 500,
       useNativeDriver: false,
     }).start();
+
+    const track = await getTrack(href);
   }
 
   return (
@@ -122,7 +124,7 @@ export default function CategoryPopupItem({
       </View>
 
       <TouchableOpacity
-        onPress={onPressCheckPlayList}
+        onPress={() => onPressCheckPlayList(item.tracks.href)}
         style={{
           borderColor: 'whitesmoke',
           borderWidth: 0.5,
