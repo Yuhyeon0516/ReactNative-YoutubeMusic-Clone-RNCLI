@@ -69,6 +69,9 @@ export interface PlayListItems {
     width: number | null;
   }[];
   name: string;
+  tracks: {
+    href: string;
+  };
 }
 
 export interface PlayLists {

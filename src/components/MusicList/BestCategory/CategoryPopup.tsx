@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Animated,
   Pressable,
+  PanResponder,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -27,6 +28,45 @@ export default function CategoryPopup({
   const {width} = useWindowDimensions();
   const xAnim = useRef(new Animated.Value(0)).current;
   const [currentPage, setCurrentPage] = useState(0);
+
+  const panRes = PanResponder.create({
+    onMoveShouldSetPanResponder: () => true,
+    onPanResponderMove: (event, gestureState) => {
+      const {dx} = gestureState;
+
+      xAnim.setValue(currentPage * -(width - 100) + dx);
+    },
+    onPanResponderEnd: (event, gestureState) => {
+      const {dx} = gestureState;
+
+      if (currentPage === 0 && dx > 100) {
+        Animated.timing(xAnim, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: false,
+        }).start();
+      } else if (dx > 100) {
+        onPressLeft();
+      } else if (
+        currentPage === categoryPlayLists!.playlists.items.length - 1 &&
+        dx < -100
+      ) {
+        Animated.timing(xAnim, {
+          toValue: currentPage * -(width - 100),
+          duration: 300,
+          useNativeDriver: false,
+        }).start();
+      } else if (dx < -100) {
+        onPressRight();
+      } else {
+        Animated.timing(xAnim, {
+          toValue: currentPage * -(width - 100),
+          duration: 300,
+          useNativeDriver: false,
+        }).start();
+      }
+    },
+  });
 
   function onPressClose() {
     Animated.timing(categoryPopupAnim, {
@@ -93,11 +133,7 @@ export default function CategoryPopup({
 
       <View style={{alignItems: 'center', flex: 1}}>
         {categoryPlayLists && (
-          <View
-            style={{
-              flex: 1,
-              // width: width * categoryPlayLists.playlists.items.length,
-            }}>
+          <View style={{flex: 1}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -137,6 +173,7 @@ export default function CategoryPopup({
               )}
 
               <Animated.View
+                {...panRes.panHandlers}
                 style={{
                   flexDirection: 'row',
                   width:
@@ -185,61 +222,6 @@ export default function CategoryPopup({
                 />
               )}
             </View>
-            {/* {categoryPlayLists.playlists.items.map((item, index) => {
-              return (
-                <View
-                  key={index}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: width,
-                    height: '100%',
-                  }}>
-                  {index ? (
-                    <TouchableOpacity
-                      onPress={() => onPressLeft(index)}
-                      style={{
-                        width: 50,
-                        height: 50,
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <MaterialIcons
-                        name="arrow-back-ios"
-                        size={25}
-                        color={'whitesmoke'}
-                      />
-                    </TouchableOpacity>
-                  ) : (
-                    <View style={{width: 50, height: 50, padding: 5}} />
-                  )}
-
-                  <CategoryPopupItem item={item} />
-
-                  {index !== categoryPlayLists.playlists.items.length - 1 ? (
-                    <TouchableOpacity
-                      onPress={() => onPressRight(index)}
-                      style={{
-                        width: 50,
-                        height: 50,
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <MaterialIcons
-                        name="arrow-forward-ios"
-                        size={25}
-                        color={'whitesmoke'}
-                      />
-                    </TouchableOpacity>
-                  ) : (
-                    <View style={{width: 50, height: 50, padding: 5}} />
-                  )}
-                </View>
-              );
-            })} */}
           </View>
         )}
       </View>
