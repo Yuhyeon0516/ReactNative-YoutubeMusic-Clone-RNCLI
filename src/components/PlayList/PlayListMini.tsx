@@ -28,7 +28,7 @@ export default function PlayListMini() {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Icon name="play" size={24} color={'white'} />
+            <Icon name="pause" size={24} color={'white'} />
           </View>
         </TouchableOpacity>
 

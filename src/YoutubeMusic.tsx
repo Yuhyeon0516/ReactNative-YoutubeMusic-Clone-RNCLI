@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, ScrollView, Animated} from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import LogoHeader from './components/Header/LogoHeader';
 import HeaderCategory from './components/Header/CategoryHeader';
 import HeaderBackground from './components/Header/HeaderBackground';
@@ -21,6 +21,7 @@ export default function YoutubeMusic() {
   const [selectedCategory, setSelectedCategory] = useState<
     number | undefined
   >();
+  const [timer, setTimer] = useState(0);
 
   const {
     onScrollBeginDrag,
@@ -36,6 +37,12 @@ export default function YoutubeMusic() {
     useBestCategory();
 
   const [trackData, setTrackData] = useState<Track | null>(null);
+
+  useEffect(() => {
+    setInterval(() => {
+      setTimer(prev => prev + 1);
+    }, 1000);
+  }, []);
 
   return (
     <View style={{flex: 1, backgroundColor: '#111'}}>
@@ -66,7 +73,7 @@ export default function YoutubeMusic() {
         </View>
       </ScrollView>
       <PlayList playListAnim={playListAnim} />
-      <Footer playListAnim={playListAnim} />
+      <Footer playListAnim={playListAnim} timer={timer} />
 
       <CategoryPopup
         categoryPopupAnim={categoryPopupAnim}
