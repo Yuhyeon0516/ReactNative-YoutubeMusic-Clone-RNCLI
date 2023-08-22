@@ -23,7 +23,7 @@ export default function CategoryPopup({
   function onPressClose() {
     Animated.timing(categoryPopupAnim, {
       toValue: 0,
-      duration: 600,
+      duration: 300,
       useNativeDriver: false,
     }).start(({finished}) => {
       if (finished) {
@@ -41,15 +41,18 @@ export default function CategoryPopup({
         position: 'absolute',
         backgroundColor: '#1c1c1d',
         paddingHorizontal: 20,
-        top: 0,
-        transform: [
-          {
-            translateY: categoryPopupAnim.interpolate({
-              inputRange: [0, 1],
-              outputRange: [1200, 0],
-            }),
-          },
-        ],
+        top: categoryPopupAnim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [1000, 0],
+        }),
+        // transform: [
+        //   {
+        //     translateY: categoryPopupAnim.interpolate({
+        //       inputRange: [0, 1],
+        //       outputRange: [500, 0],
+        //     }),
+        //   },
+        // ],
       }}>
       <SafeAreaView style={{flex: 1, alignItems: 'center'}}>
         <View

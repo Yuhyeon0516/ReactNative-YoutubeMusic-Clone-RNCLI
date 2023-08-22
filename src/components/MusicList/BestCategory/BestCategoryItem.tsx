@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Animated,
 } from 'react-native';
-import React, {useCallback} from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface ItemProps {
@@ -26,20 +26,16 @@ export default function BestCategoryItem({
 
   function onPressItem() {
     setCategorySelected(true);
+
     Animated.timing(categoryPopupAnim, {
       toValue: 1,
-      duration: 600,
+      duration: 300,
       useNativeDriver: false,
     }).start();
   }
 
-  const ucOnPressItem = useCallback(onPressItem, [
-    categoryPopupAnim,
-    setCategorySelected,
-  ]);
-
   return (
-    <TouchableOpacity onPress={ucOnPressItem}>
+    <TouchableOpacity onPress={onPressItem}>
       <Image
         source={{
           uri: url,
