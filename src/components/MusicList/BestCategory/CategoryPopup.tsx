@@ -12,7 +12,7 @@ import React, {useRef, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CategoryPopupItem from './CategoryPopupItem';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {PlayLists} from '../../../hooks/useSpotify';
+import {PlayLists, Track} from '../../../hooks/useSpotify';
 
 interface CategoryPopupPropsType {
   categoryPopupAnim: Animated.Value;
@@ -20,6 +20,7 @@ interface CategoryPopupPropsType {
   categoryPlayLists: PlayLists | null;
   setCategoryPlayLists: React.Dispatch<React.SetStateAction<PlayLists | null>>;
   playListsAnim: Animated.Value;
+  setTrackData: React.Dispatch<React.SetStateAction<Track | null>>;
 }
 
 export default function CategoryPopup({
@@ -28,6 +29,7 @@ export default function CategoryPopup({
   categoryPlayLists,
   setCategoryPlayLists,
   playListsAnim,
+  setTrackData,
 }: CategoryPopupPropsType) {
   const {width} = useWindowDimensions();
   const xAnim = useRef(new Animated.Value(0)).current;
@@ -197,6 +199,7 @@ export default function CategoryPopup({
                         key={index}
                         item={item}
                         playListsAnim={playListsAnim}
+                        setTrackData={setTrackData}
                       />
                     );
                   })}

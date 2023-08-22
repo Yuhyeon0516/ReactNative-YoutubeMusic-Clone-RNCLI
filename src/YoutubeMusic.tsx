@@ -15,6 +15,7 @@ import useAnimation from './hooks/useAnimation';
 import BestCategoryList from './components/MusicList/BestCategory/BestCategoryList';
 import CategoryPopup from './components/MusicList/BestCategory/CategoryPopup';
 import PlayLists from './components/MusicList/BestCategory/PlayLists';
+import {Track} from './hooks/useSpotify';
 
 export default function YoutubeMusic() {
   const [selectedCategory, setSelectedCategory] = useState<
@@ -33,6 +34,8 @@ export default function YoutubeMusic() {
   const {categoryPopupAnim, playListsAnim} = useAnimation();
   const {setCategorySelected, categoryPlayLists, setCategoryPlayLists} =
     useBestCategory();
+
+  const [trackData, setTrackData] = useState<Track | null>(null);
 
   return (
     <View style={{flex: 1, backgroundColor: '#111'}}>
@@ -71,8 +74,14 @@ export default function YoutubeMusic() {
         categoryPlayLists={categoryPlayLists}
         setCategoryPlayLists={setCategoryPlayLists}
         playListsAnim={playListsAnim}
+        setTrackData={setTrackData}
       />
-      <PlayLists playListsAnim={playListsAnim} />
+
+      <PlayLists
+        playListsAnim={playListsAnim}
+        trackData={trackData}
+        setTrackData={setTrackData}
+      />
     </View>
   );
 }

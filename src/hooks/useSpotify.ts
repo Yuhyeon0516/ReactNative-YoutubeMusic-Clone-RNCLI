@@ -94,20 +94,22 @@ export async function getCategoryPlayLists(href: string): Promise<PlayLists> {
   return playLists;
 }
 
-export interface Track {
-  items: {
-    track: {
-      album: {
-        artists: {
-          name: string;
-        }[];
-        images: {
-          url: string;
-        }[];
+export interface TrackItem {
+  track: {
+    album: {
+      artists: {
         name: string;
-      };
+      }[];
+      images: {
+        url: string;
+      }[];
+      name: string;
     };
-  }[];
+  };
+}
+
+export interface Track {
+  items: TrackItem[];
 }
 
 export async function getTrack(href: string): Promise<Track> {
