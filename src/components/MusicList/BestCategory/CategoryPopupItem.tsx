@@ -5,13 +5,28 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   Image,
+  Animated,
 } from 'react-native';
 import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {PlayListItems} from '../../../hooks/useSpotify';
 
-export default function CategoryPopupItem({item}: {item: PlayListItems}) {
+export default function CategoryPopupItem({
+  item,
+  playListsAnim,
+}: {
+  item: PlayListItems;
+  playListsAnim: Animated.Value;
+}) {
   const {width} = useWindowDimensions();
+
+  function onPressCheckPlayList() {
+    Animated.timing(playListsAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  }
 
   return (
     <View
@@ -107,6 +122,7 @@ export default function CategoryPopupItem({item}: {item: PlayListItems}) {
       </View>
 
       <TouchableOpacity
+        onPress={onPressCheckPlayList}
         style={{
           borderColor: 'whitesmoke',
           borderWidth: 0.5,
@@ -121,7 +137,7 @@ export default function CategoryPopupItem({item}: {item: PlayListItems}) {
             color: 'whitesmoke',
             fontWeight: 'bold',
           }}>
-          모두 재생
+          재생 목록 확인
         </Text>
       </TouchableOpacity>
     </View>

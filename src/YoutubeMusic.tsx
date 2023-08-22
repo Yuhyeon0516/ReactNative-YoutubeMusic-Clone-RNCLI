@@ -14,6 +14,7 @@ import {useBestCategory} from './hooks/useBestCategory';
 import useAnimation from './hooks/useAnimation';
 import BestCategoryList from './components/MusicList/BestCategory/BestCategoryList';
 import CategoryPopup from './components/MusicList/BestCategory/CategoryPopup';
+import PlayLists from './components/MusicList/BestCategory/PlayLists';
 
 export default function YoutubeMusic() {
   const [selectedCategory, setSelectedCategory] = useState<
@@ -29,7 +30,7 @@ export default function YoutubeMusic() {
   } = useYoutubeMusic();
 
   const playListAnim = useRef(new Animated.Value(0)).current;
-  const {categoryPopupAnim} = useAnimation();
+  const {categoryPopupAnim, playListsAnim} = useAnimation();
   const {setCategorySelected, categoryPlayLists, setCategoryPlayLists} =
     useBestCategory();
 
@@ -69,7 +70,9 @@ export default function YoutubeMusic() {
         setCategorySelected={setCategorySelected}
         categoryPlayLists={categoryPlayLists}
         setCategoryPlayLists={setCategoryPlayLists}
+        playListsAnim={playListsAnim}
       />
+      <PlayLists playListsAnim={playListsAnim} />
     </View>
   );
 }

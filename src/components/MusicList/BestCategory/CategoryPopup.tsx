@@ -14,17 +14,21 @@ import CategoryPopupItem from './CategoryPopupItem';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {PlayLists} from '../../../hooks/useSpotify';
 
+interface CategoryPopupPropsType {
+  categoryPopupAnim: Animated.Value;
+  setCategorySelected: React.Dispatch<React.SetStateAction<boolean>>;
+  categoryPlayLists: PlayLists | null;
+  setCategoryPlayLists: React.Dispatch<React.SetStateAction<PlayLists | null>>;
+  playListsAnim: Animated.Value;
+}
+
 export default function CategoryPopup({
   categoryPopupAnim,
   setCategorySelected,
   categoryPlayLists,
   setCategoryPlayLists,
-}: {
-  categoryPopupAnim: Animated.Value;
-  setCategorySelected: React.Dispatch<React.SetStateAction<boolean>>;
-  categoryPlayLists: PlayLists | null;
-  setCategoryPlayLists: React.Dispatch<React.SetStateAction<PlayLists | null>>;
-}) {
+  playListsAnim,
+}: CategoryPopupPropsType) {
   const {width} = useWindowDimensions();
   const xAnim = useRef(new Animated.Value(0)).current;
   const [currentPage, setCurrentPage] = useState(0);
@@ -188,7 +192,13 @@ export default function CategoryPopup({
                 }}>
                 {categoryPlayLists &&
                   categoryPlayLists.playlists.items.map((item, index) => {
-                    return <CategoryPopupItem key={index} item={item} />;
+                    return (
+                      <CategoryPopupItem
+                        key={index}
+                        item={item}
+                        playListsAnim={playListsAnim}
+                      />
+                    );
                   })}
               </Animated.View>
 
